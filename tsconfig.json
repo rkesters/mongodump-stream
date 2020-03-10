@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "commonjs",
+        "lib": ["es2017", "dom"],
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "inlineSourceMap": true,
+        "strict": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "declaration": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true
+    },
+    "exclude": ["./dist", "./test/**/*.ts", "./src/**/__mocks__/**"],
+    "include": ["./**/*.ts", "./**/*.d.ts"]
+}
