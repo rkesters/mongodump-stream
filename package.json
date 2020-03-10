@@ -1,17 +1,17 @@
 {
-  "name": "mongodump-stream",
-  "version": "1.1.1",
+  "name": "@rkesters/mongodump-stream",
+  "version": "1.0.0",
   "description": "Various streaming utilities for dumping a mongo DB",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rafkhan/mongodump-stream.git"
+    "url": "https://github.com/rkesters/mongodump-stream.git"
   },
-  "homepage": "https://github.com/rafkhan/mongodump-stream",
+  "homepage": "https://github.com/rkesters/mongodump-stream",
   "scripts": {
     "test": "echo 'no test'"
   },
-  "author": "Rafael Khan",
+  "author": "Robert Kesterson",
   "license": "MIT",
   "dependencies": {
     "knox": "^0.9.1",
