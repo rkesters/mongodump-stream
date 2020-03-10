@@ -4,6 +4,12 @@
   "description": "Various streaming utilities for dumping a mongo DB",
   "main": "index.js",
   "types": "index.d.td",
+  "keywords": [
+    "mongo",
+    "fixture",
+    "testing",
+    "typescript"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/rkesters/mongodump-stream.git"
