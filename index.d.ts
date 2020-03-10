@@ -15,9 +15,9 @@ declare module '@rkesters/mongodump-stream' {
     };
 
     dump: {
-      s3: (fileName: string, stream: ChildProcess, awsConf: IAWSConfig) => Promise<any>;
+      s3: {streamToS3: (fileName: string, stream: ChildProcess, awsConf: IAWSConfig) => Promise<any>;}
       fs: {
-        file: (fileName: string, stream: ChildProcess) => Promise<any>;
+        file: (stream: ChildProcess, fileName: string) => Promise<any>;
       };
     };
   }
