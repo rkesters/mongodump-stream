@@ -14,7 +14,11 @@ async function getDumpProcess(
   const db = client.db(),
     col = db.collection(collection);
 
-  return col.find({}).stream();
+  return col.find({}).stream({
+    transform: function(doc) {
+      return `${JSON.stringify(doc)}\n`;
+    }
+  });
 }
 
 export async function textDumpStream(

@@ -16,7 +16,12 @@
   },
   "homepage": "https://github.com/rkesters/mongodump-stream",
   "scripts": {
-    "test": "echo 'no test'"
+    "test": "echo 'no test'",
+    "prebuild": "npx del-cli ./dist",
+    "build": "npx tsc",
+    "postbuild": "npx copyfiles package.json dist",
+    "prepublish": "npm run build",
+    "pub": "npm publish"
   },
   "author": "Robert Kesterson",
   "license": "MIT",
@@ -33,6 +38,8 @@
     "@types/q": "^1.5.2",
     "aws-sdk": "^2.636.0",
     "chai": "^1.10.0",
+    "copyfiles": "^2.2.0",
+    "del-cli": "^3.0.0",
     "mocha": "^7.1.0",
     "prettier": "1.19.1",
     "tslint": "5.17.0",
