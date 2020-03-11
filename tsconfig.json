@@ -4,7 +4,7 @@
         "module": "commonjs",
         "lib": ["es2017", "dom"],
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": ".",
         "inlineSourceMap": true,
         "strict": true,
         "experimentalDecorators": true,
@@ -13,6 +13,6 @@
         "moduleResolution": "node",
         "resolveJsonModule": true
     },
-    "exclude": ["./dist", "./test/**/*.ts", "./src/**/__mocks__/**"],
+    "exclude": ["./dist", "./__test__/**", "./src/**/__mocks__/**"],
     "include": ["./**/*.ts", "./**/*.d.ts"]
 }
