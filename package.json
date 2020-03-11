@@ -21,20 +21,25 @@
     "tsc": "npx tsc -b ./tsconfig-build.json ",
     "build": "npm run tsc",
     "postbuild": "npx copyfiles package.json dist",
-    "prepublish": "npm run build",
     "pub": "npm publish ./dist"
   },
   "author": "Robert Kesterson",
   "license": "MIT",
   "dependencies": {
+    "@types/fs-extra": "^8.1.0",
+    "@types/stack-trace": "0.0.29",
+    "fs-extra": "^8.1.0",
+    "lodash": "^4.17.15",
     "mongo-uri": "^0.1.2",
     "mongodb": "^3.5.4",
     "q": "^1.1.1",
     "ramda": "^0.8.0",
-    "request": "^2.48.0"
+    "request": "^2.48.0",
+    "stack-trace": "0.0.10"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
+    "@types/lodash": "^4.14.149",
     "@types/mongodb": "^3.5.2",
     "@types/node": "^13.9.0",
     "@types/q": "^1.5.2",
