@@ -14,5 +14,5 @@
         "resolveJsonModule": true
     },
     "exclude": ["./dist", "./__test__/**", "./src/**/__mocks__/**"],
-    "include": ["./**/*.ts", "./**/*.d.ts"]
+    "include": ["./src/**/*.ts", "./src/**/*.d.ts"]
 }

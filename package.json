@@ -18,7 +18,8 @@
   "scripts": {
     "test": "npx jest --forceExit",
     "prebuild": "npx del-cli ./dist",
-    "build": "npx tsc",
+    "tsc": "npx tsc -b ./tsconfig-build.json ",
+    "build": "npm run tsc",
     "postbuild": "npx copyfiles package.json dist",
     "prepublish": "npm run build",
     "pub": "npm publish"
