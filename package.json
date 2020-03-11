@@ -22,7 +22,7 @@
     "build": "npm run tsc",
     "postbuild": "npx copyfiles package.json dist",
     "prepublish": "npm run build",
-    "pub": "npm publish"
+    "pub": "npm publish ./dist"
   },
   "author": "Robert Kesterson",
   "license": "MIT",
