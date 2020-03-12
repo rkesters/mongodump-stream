@@ -20,7 +20,7 @@
     "prebuild": "npx del-cli ./dist",
     "tsc": "npx tsc -b ./tsconfig-build.json ",
     "build": "npm run tsc",
-    "postbuild": "npx copyfiles package.json dist",
+    "postbuild": "npx copyfiles package.json README.md dist",
     "pub": "npm publish ./dist"
   },
   "author": "Robert Kesterson",
