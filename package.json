@@ -21,7 +21,6 @@
     "tsc": "npx tsc -b ./tsconfig-build.json ",
     "build": "npm run tsc",
     "postbuild": "npx copyfiles package.json dist",
-    "prepare": "npm run build",
     "pub": "npm publish ./dist"
   },
   "author": "Robert Kesterson",
