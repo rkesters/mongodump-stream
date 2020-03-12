@@ -1,6 +1,5 @@
 import { MongoClient } from "mongodb";
-import { mongoRestore } from "../../../src/lib/mongo-restore/mongo-restore";
-import * as fs from "fs";
+import * as fs from "fs-extra";
 import * as q from "q";
 import * as readline from "readline";
 import * as path from "path";
@@ -8,21 +7,14 @@ import * as path from "path";
 import * as mongoDump from "../../../src/lib/mongo-dump/mongo-dump";
 import { streamToFile as fsDumpFile } from "../../../src/lib/fs-dump/file";
 
-const mongoUrl = "mongodb://localhost:27017/dumptestdb";
-const mongoCollection = "dumptestcollection";
-
-const removeFn;
-const insertFn;
-const findOneFn;
-
-
 describe("Mongo dump stream", function() {
-  const dbUri: string = (<any>global).MONGO_URI;
-  const client = new MongoClient(dbUri, {
+  const mongoCollection = "dumptestcollection";
+  const mongoUrl: string = (<any>global).MONGO_URI;
+  const client = new MongoClient(mongoUrl, {
     useUnifiedTopology: true
   });
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await client.connect();
     await client.db().createCollection(mongoCollection);
     return client
@@ -31,56 +23,48 @@ describe("Mongo dump stream", function() {
       .insertOne({ a: "The cat is dead" });
   });
 
-  afterEach(async () => {
-    await client.close();
-    return client
+  afterAll(async () => {
+    await client
       .db()
       .collection(mongoCollection)
       .deleteMany({});
+
+    return client.close();
   });
 
-  it("Should get a text dump stream", async function() {
-    const valId;
+  test("Should get a text dump stream", async () => {
+    const { stream } = await mongoDump.textDumpStream(
+      mongoUrl,
+      mongoCollection
+    );
+    const name = "test.json";
+    await fsDumpFile(stream, name);
+    const buffer = fs.readFileSync(name);
+    const data: { a: string; _id: string } = JSON.parse(buffer.toString());
 
-    const {stream} = await mongoDump.textDumpStream(mongoUrl, mongoCollection);
-    await fsDumpFile(stream,  "test.json");
+    expect(data.a).toMatchInlineSnapshot(`"The cat is dead"`);
+    expect(data._id).toBeDefined();
 
-    expect().
+    fs.unlinkSync(name);
   });
 
-  it("Should get a binary dump stream", function(done) {
-    const valId;
-    const now = Date.now();
+  test("Should get a binary dump stream", async () => {
+    const { stream } = await mongoDump.binaryDumpStream(
+      mongoUrl,
+      mongoCollection
+    );
+    const name = "test.bson";
+    await fsDumpFile(stream, name);
+    const buffer = fs.readFileSync(name);
+    const data: { a: string; _id: string } = JSON.parse(buffer.toString());
 
-    const args = [
-      "--db",
-      "dumptestdb",
-      "--collection",
-      "dumptestcollection",
-      now + ".bson"
-    ];
-
-    collPromise.then(function() {
-      removeFn({})
-        .then(function() {
-          return insertFn({ a: now });
-        })
-        .then(function(res) {
-          valId = res[0]._id;
-
-          const stream = mongoDump.getBinaryDumpStream(mongoUrl, mongoCollection);
-          const outStream = fs.createWriteStream(now + ".bson");
-          stream.pipe(outStream);
-
-          outStream.on(
-            "finish",
-            loadIntoMongo("mongorestore", valId, now, args, done)
-          );
-        }, console.log);
-    });
+    expect(data.a).toMatchInlineSnapshot(`"The cat is dead"`);
+    expect(data._id).toBeDefined();
+    fs.unlinkSync(name);
   });
 });
 
+/*
 describe("Multiple collections", function() {
   before(function(done) {
     testUtils.getCollPromise(mongoUrl, "multi_a").then(function(coll) {
@@ -125,3 +109,4 @@ describe("Multiple collections", function() {
       .then(function() {}, console.log);
   });
 });
+*/
