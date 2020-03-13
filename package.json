@@ -31,7 +31,8 @@
     "mongodb": "^3.5.4",
     "q": "^1.1.1",
     "ramda": "^0.8.0",
-    "stack-trace": "0.0.10"
+    "stack-trace": "0.0.10",
+    "aws-sdk": "^2.636.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
@@ -41,7 +42,6 @@
     "@types/mongodb": "^3.5.2",
     "@types/node": "^13.9.0",
     "@types/q": "^1.5.2",
-    "aws-sdk": "^2.636.0",
     "copyfiles": "^2.2.0",
     "del-cli": "^3.0.0",
     "jest": "^25.1.0",
