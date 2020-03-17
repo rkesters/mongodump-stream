@@ -15,7 +15,7 @@ function parentPath() {
     }
 
     const currentFile = currentFrame.getFileName();
-    const parentFrame = trace.find(t => t.getFileName() !== currentFile);
+    const parentFrame = trace.find(t => t.getFileName() !== currentFile && !t.getFileName().includes('node_modules'));
 
     if (!parentFrame) {
         return;
