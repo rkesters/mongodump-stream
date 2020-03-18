@@ -13,6 +13,5 @@
         "moduleResolution": "node",
         "resolveJsonModule": true
     },
-    "exclude": ["./dist", "./__test__/**", "./src/**/__mocks__/**"],
-    "include": ["./src/**/*.ts", "./src/**/*.d.ts"]
+    "exclude": ["./dist"]
 }

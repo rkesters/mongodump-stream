@@ -3,6 +3,7 @@ import { mongoRestore } from "../../../src/lib/mongo-restore/mongo-restore";
 import * as fs from "fs";
 import * as readline from "readline";
 import * as path from "path";
+import exp = require("constants");
 
 describe("mongo-restore", () => {
   const dbUri: string = (<any>global).MONGO_URI;
@@ -18,7 +19,7 @@ describe("mongo-restore", () => {
     return client.close();
   });
 
-  test("restore data from file", async done => {
+  test("restore data from file", async () => {
     const db = client.db();
     await db.createCollection("mementos");
 
@@ -28,18 +29,10 @@ describe("mongo-restore", () => {
     );
     const readable = fs.createReadStream(dataPath);
 
-    await mongoRestore(dbUri, "mementos", readable);
+    await mongoRestore(dbUri, "mementos", dataPath);
     const col = db.collection("mementos");
 
     const count = await col.countDocuments();
-    const expectedStream = fs.createReadStream(dataPath);
-    const lines = [];
-    const reader = readline.createInterface(expectedStream).on("line", line => {
-      lines.push(line);
-    }).on("close", () => {
-      expect(count).toEqual(lines.length);
-      done();
-    });
-
+    expect(count).toMatchInlineSnapshot(`2`);
   }, 30000);
 });

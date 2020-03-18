@@ -32,6 +32,19 @@ describe("Mongo dump stream", function() {
     return client.close();
   });
 
+  beforeEach(async () => {
+    return client
+      .db()
+      .collection(mongoCollection)
+      .insertOne({ a: "The cat is dead" });
+  });
+  afterEach(async () => {
+    return client
+      .db()
+      .collection(mongoCollection)
+      .deleteMany({});
+  });
+
   test("Should get a text dump stream", async () => {
     const { stream } = await mongoDump.textDumpStream(
       mongoUrl,
@@ -40,10 +53,10 @@ describe("Mongo dump stream", function() {
     const name = "test.json";
     await fsDumpFile(stream, name);
     const buffer = fs.readFileSync(name);
-    const data: { a: string; _id: string } = JSON.parse(buffer.toString());
+    const data: { a: string; _id: string }[][] = JSON.parse(buffer.toString());
 
-    expect(data.a).toMatchInlineSnapshot(`"The cat is dead"`);
-    expect(data._id).toBeDefined();
+    expect(data[0][0].a).toMatchInlineSnapshot(`"The cat is dead"`);
+    expect(data[0][0]._id).toBeDefined();
 
     fs.unlinkSync(name);
   });
@@ -56,11 +69,64 @@ describe("Mongo dump stream", function() {
     const name = "test.bson";
     await fsDumpFile(stream, name);
     const buffer = fs.readFileSync(name);
-    const data: { a: string; _id: string } = JSON.parse(buffer.toString());
+    const data: { a: string; _id: string }[][] = JSON.parse(buffer.toString());
 
-    expect(data.a).toMatchInlineSnapshot(`"The cat is dead"`);
-    expect(data._id).toBeDefined();
+    expect(data[0][0].a).toMatchInlineSnapshot(`"The cat is dead"`);
+    expect(data[0][0]._id).toBeDefined();
     fs.unlinkSync(name);
+  });
+
+  describe("Save in chunks", () => {
+    beforeEach(async () => {
+      return client
+        .db()
+        .collection(mongoCollection)
+        .insertMany([
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" },
+          { a: "The cat is dead" }
+        ]);
+    });
+
+    test.only("Should get a text dump stream", async () => {
+      const { stream } = await mongoDump.textDumpStream(
+        mongoUrl,
+        mongoCollection
+      );
+      const name = "test.json";
+      await fsDumpFile(stream, name);
+      const buffer = fs.readFileSync(name);
+      const data: { a: string; _id: string }[][] = JSON.parse(
+        buffer.toString()
+      );
+
+      expect(data[0][0].a).toMatchInlineSnapshot(`"The cat is dead"`);
+      expect(data.length).toMatchInlineSnapshot(`3`);
+      expect(data[0].length).toMatchInlineSnapshot(`10`);
+      expect(data[1].length).toMatchInlineSnapshot(`10`);
+      expect(data[2].length).toMatchInlineSnapshot(`1`);
+      expect(data[0][0]._id).toBeDefined();
+
+      fs.unlinkSync(name);
+    });
   });
 });
 

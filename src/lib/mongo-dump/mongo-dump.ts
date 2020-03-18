@@ -12,7 +12,7 @@ async function getDumpProcess(uri: string, collection: string) {
 
   const stream = col.find({}).stream({
     transform: function(doc) {
-      return `${JSON.stringify(doc)}<eor>\n`;
+      return `${JSON.stringify(doc)}\n`;
     }
   });
 

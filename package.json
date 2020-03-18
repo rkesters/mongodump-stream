@@ -26,13 +26,14 @@
   "author": "Robert Kesterson",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.636.0",
+    "cosmiconfig": "^6.0.0",
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.15",
     "mongodb": "^3.5.4",
     "q": "^1.1.1",
     "ramda": "^0.8.0",
-    "stack-trace": "0.0.10",
-    "aws-sdk": "^2.636.0"
+    "stack-trace": "0.0.10"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
@@ -65,5 +66,8 @@
       "md5Check": "1",
       "autostart": false
     }
+  },
+  "mongoDumpStream": {
+    "chunkSize": 10
   }
 }
