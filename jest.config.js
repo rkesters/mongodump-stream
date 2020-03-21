@@ -21,5 +21,6 @@ module.exports = {
     coverageReporters: ['lcov', 'cobertura'],
     coverageDirectory: '.coverage',
     coveragePathIgnorePatterns: ['/__tests__/', '/node_modules/'],
-    testRegex: '(/__tests__/specs/.*)\\.[t]sx?$'
+    testRegex: '(/__tests__/specs/.*)\\.[t]sx?$',
+
 };

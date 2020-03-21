@@ -5,7 +5,6 @@ import { mongoRestore } from "../mongo-restore/mongo-restore";
 import { textDumpStream } from "../mongo-dump/mongo-dump";
 import { streamToFile } from "../fs-dump/file";
 import * as _ from "lodash";
-import { cosmiconfig, cosmiconfigSync } from "cosmiconfig";
 
 function parentPath() {
   const trace = stackTrace.get();
@@ -31,8 +30,12 @@ function parentPath() {
   return path.dirname(parentFile);
 }
 
-export async function saveFixture(name: string, collections: string[]) {
-  const calledPath = parentPath() ?? process.cwd();
+export async function saveFixture(
+  name: string,
+  collections: string[],
+  rootPath?: string
+) {
+  const calledPath = rootPath ?? parentPath() ?? process.cwd();
   const basePath = path.resolve(calledPath, "__mongo_fixtures__", name);
 
   if (fs.existsSync(basePath)) {
@@ -64,11 +67,11 @@ export async function saveFixture(name: string, collections: string[]) {
   return dumpCollections(basePath, collections);
 }
 
-export async function restoreFixture(name: string) {
-  const calledPath = parentPath() ?? process.cwd();
-  const basePath = path.resolve(calledPath, "__mongo_fixtures__", name);
+export async function restoreFixture(name: string, basePath?: string) {
+  const calledPath = basePath ?? parentPath() ?? process.cwd();
+  const fullPath = path.resolve(calledPath, "__mongo_fixtures__", name);
 
-  return loadCollections(basePath);
+  return loadCollections(fullPath);
 }
 
 export async function loadCollections(basePath: string) {
