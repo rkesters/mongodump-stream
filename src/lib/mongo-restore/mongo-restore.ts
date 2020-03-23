@@ -21,18 +21,15 @@ export async function mongoRestore(
 
   const d = q.defer();
 
-  const file: any[][] = fs.readJsonSync(filename);
+  const file: any[] = fs.readJsonSync(filename);
 
-  const insertPromises: Promise<any>[] = file.map(async chunk => {
-    const c = chunk.map((d: any) => {
-      d._id = new ObjectId(d._id);
-      return d;
-    });
+  const data = file.map( (record: any) => {
+    record._id = new ObjectId(record._id);
 
-    return col.insertMany(c);
+    return record;
   });
 
-  Promise.all(insertPromises).then(() => {
+  col.insertMany(data).then(() => {
     d.resolve();
   });
 
