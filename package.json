@@ -36,26 +36,27 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
-    "@types/stack-trace": "0.0.29",
     "@types/jest": "^25.1.4",
     "@types/lodash": "^4.14.149",
     "@types/mongodb": "^3.5.2",
     "@types/node": "^13.9.0",
     "@types/q": "^1.5.2",
+    "@types/stack-trace": "0.0.29",
     "copyfiles": "^2.2.0",
     "del-cli": "^3.0.0",
     "jest": "^25.1.0",
     "jest-environment-mongodb": "^1.0.2",
+    "jest-summary-reporter": "0.0.2",
     "mongodb-memory-server-global": "^6.3.2",
     "prettier": "1.19.1",
+    "request": "^2.48.0",
     "ts-jest": "^25.2.1",
     "tslint": "5.17.0",
     "tslint-config-airbnb": "5.11.1",
     "tslint-config-prettier": "1.18.0",
     "tslint-microsoft-contrib": "6.2.0",
     "tslint-misc-rules": "3.5.1",
-    "typescript": "3.8.2",
-    "request": "^2.48.0"
+    "typescript": "3.8.2"
   },
   "config": {
     "mongodbMemoryServer": {

@@ -22,5 +22,8 @@ module.exports = {
     coverageDirectory: '.coverage',
     coveragePathIgnorePatterns: ['/__tests__/', '/node_modules/'],
     testRegex: '(/__tests__/specs/.*)\\.[t]sx?$',
-
+    "reporters": [
+        "default",
+        ["jest-summary-reporter", {"failuresOnly": true}]
+    ]
 };

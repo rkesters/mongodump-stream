@@ -53,10 +53,10 @@ describe("Mongo dump stream", function() {
     const name = "test.json";
     await fsDumpFile(stream, name);
     const buffer = fs.readFileSync(name);
-    const data: { a: string; _id: string }[][] = JSON.parse(buffer.toString());
+    const data: { a: string; _id: string }[] = JSON.parse(buffer.toString());
 
-    expect(data[0][0].a).toMatchInlineSnapshot(`"The cat is dead"`);
-    expect(data[0][0]._id).toBeDefined();
+    expect(data[0].a).toMatchInlineSnapshot(`"The cat is dead"`);
+    expect(data[0]._id).toBeDefined();
 
     fs.unlinkSync(name);
   });
@@ -69,10 +69,10 @@ describe("Mongo dump stream", function() {
     const name = "test.bson";
     await fsDumpFile(stream, name);
     const buffer = fs.readFileSync(name);
-    const data: { a: string; _id: string }[][] = JSON.parse(buffer.toString());
+    const data: { a: string; _id: string }[] = JSON.parse(buffer.toString());
 
-    expect(data[0][0].a).toMatchInlineSnapshot(`"The cat is dead"`);
-    expect(data[0][0]._id).toBeDefined();
+    expect(data[0].a).toMatchInlineSnapshot(`"The cat is dead"`);
+    expect(data[0]._id).toBeDefined();
     fs.unlinkSync(name);
   });
 
@@ -106,7 +106,7 @@ describe("Mongo dump stream", function() {
         ]);
     });
 
-    test.only("Should get a text dump stream", async () => {
+    test("Should get a text dump stream", async () => {
       const { stream } = await mongoDump.textDumpStream(
         mongoUrl,
         mongoCollection
@@ -114,16 +114,11 @@ describe("Mongo dump stream", function() {
       const name = "test.json";
       await fsDumpFile(stream, name);
       const buffer = fs.readFileSync(name);
-      const data: { a: string; _id: string }[][] = JSON.parse(
-        buffer.toString()
-      );
+      const data: { a: string; _id: string }[] = JSON.parse(buffer.toString());
 
-      expect(data[0][0].a).toMatchInlineSnapshot(`"The cat is dead"`);
-      expect(data.length).toMatchInlineSnapshot(`3`);
-      expect(data[0].length).toMatchInlineSnapshot(`10`);
-      expect(data[1].length).toMatchInlineSnapshot(`10`);
-      expect(data[2].length).toMatchInlineSnapshot(`1`);
-      expect(data[0][0]._id).toBeDefined();
+      expect(data[0].a).toMatchInlineSnapshot(`"The cat is dead"`);
+      expect(data[0]._id).toBeDefined();
+      expect(data.length).toMatchInlineSnapshot(`22`);
 
       fs.unlinkSync(name);
     });
